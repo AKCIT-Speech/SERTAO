@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SERTAO Emotion Dataset - interactive audio samples of Brazilian Portuguese speech across seven emotion classes."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title>SERTÃO Emotion Dataset — Interactive audio samples</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Applies the saved theme before first paint to avoid a flash. Light is the default. -->
+    <script>
+      (function () {
+        var theme = 'light';
+        try {
+          var stored = window.localStorage.getItem('sertao-theme');
+          if (stored === 'light' || stored === 'dark') theme = stored;
+        } catch (error) {
+          /* storage unavailable: keep the default */
+        }
+        document.documentElement.classList.add('theme-' + theme);
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

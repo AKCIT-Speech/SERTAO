@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Two themes, one set of utility classes. Channel variables (--c-*) feed
+ * Tailwind's colour tokens; the matching --solid variables exist for inline
+ * styles that need a plain colour string.
+ *
+ * Light is the default. The class is applied before first paint by the inline
+ * script in index.html, so there is no flash of the wrong theme.
+ */
+@layer base {
+  .theme-light {
+    color-scheme: light;
+
+    --c-ink-950: 234 230 217; /* #EAE6D9 recessed trays, progress tracks */
+    --c-ink-900: 247 245 238; /* #F7F5EE page background */
+    --c-ink-800: 255 255 255; /* #FFFFFF raised cards */
+    --c-ink-700: 225 220 204; /* #E1DCCC */
+    --c-paper: 25 31 39; /*     #191F27 primary text */
+    --c-muted: 85 96 107; /*    #55606B secondary text */
+    --c-faint: 117 112 95; /*   #75705F tertiary text */
+    --c-line: 213 207 192; /*   #D5CFC0 borders */
+
+    --solid-text: #191f27;
+    --solid-muted: #55606b;
+    --solid-faint: #75705f;
+    --solid-line: #d5cfc0;
+    --solid-track: #e1dccc;
+    --solid-ring: #191f27;
+
+    --grid-line: rgba(120, 112, 92, 0.11);
+    --selection-bg: rgba(25, 31, 39, 0.14);
+
+    /* Emotion hues. --e-*-ink is darkened so the hue stays legible as text
+       on a light surface; --e-* keeps the brand value for fills. */
+    --e-angry: #e45756;
+    --e-angry-ink: #b03b3a;
+    --e-disgust: #8c7650;
+    --e-disgust-ink: #6a5836;
+    --e-fear: #8067d8;
+    --e-fear-ink: #5940b0;
+    --e-happy: #f2b84b;
+    --e-happy-ink: #8a5f10;
+    --e-neutral: #91a3a8;
+    --e-neutral-ink: #55666c;
+    --e-sad: #4d7cfe;
+    --e-sad-ink: #2a55c9;
+    --e-surprise: #2fae9b;
+    --e-surprise-ink: #14675c;
+  }
+
+  .theme-dark {
+    color-scheme: dark;
+
+    --c-ink-950: 11 15 20; /*    #0B0F14 */
+    --c-ink-900: 16 21 28; /*    #10151C page background */
+    --c-ink-800: 22 29 38; /*    #161D26 raised cards */
+    --c-ink-700: 28 36 47; /*    #1C242F */
+    --c-paper: 244 241 232; /*   #F4F1E8 primary text */
+    --c-muted: 169 178 188; /*   #A9B2BC secondary text */
+    --c-faint: 91 102 115; /*    #5B6673 tertiary text */
+    --c-line: 52 64 76; /*       #34404C borders */
+
+    --solid-text: #f4f1e8;
+    --solid-muted: #a9b2bc;
+    --solid-faint: #5b6673;
+    --solid-line: #34404c;
+    --solid-track: #34404c;
+    --solid-ring: #f4f1e8;
+
+    --grid-line: rgba(52, 64, 76, 0.16);
+    --selection-bg: rgba(244, 241, 232, 0.2);
+
+    /* On a dark surface the brand hues already carry enough contrast. */
+    --e-angry: #e45756;
+    --e-angry-ink: #e45756;
+    --e-disgust: #8c7650;
+    --e-disgust-ink: #b3985f;
+    --e-fear: #8067d8;
+    --e-fear-ink: #8067d8;
+    --e-happy: #f2b84b;
+    --e-happy-ink: #f2b84b;
+    --e-neutral: #91a3a8;
+    --e-neutral-ink: #91a3a8;
+    --e-sad: #4d7cfe;
+    --e-sad-ink: #4d7cfe;
+    --e-surprise: #2fae9b;
+    --e-surprise-ink: #2fae9b;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored sections clear of the sticky filter bar. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-ink-900 text-paper font-sans antialiased;
+    /* Faint grid, like plotting paper in a lab notebook. */
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    background-attachment: fixed;
+  }
+
+  /* Visible keyboard focus everywhere, never removed. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-offset-ink-900;
+    --tw-ring-color: var(--focus-ring, var(--solid-ring));
+  }
+
+  ::selection {
+    background: var(--selection-bg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .label-mono {
+    @apply font-mono text-[10px] uppercase tracking-label text-muted;
+  }
+
+  .rule {
+    @apply border-line;
+  }
+
+  .panel {
+    @apply rounded-card border border-line bg-ink-800/60;
+  }
+
+  .skip-link {
+    @apply absolute left-4 top-4 z-[100] -translate-y-24 rounded-card border border-line
+      bg-ink-800 px-4 py-2 font-mono text-xs text-paper transition-transform
+      focus-visible:translate-y-0;
+  }
+
+  /* Native range input restyled as a thin seek bar. */
+  .seek {
+    @apply h-1.5 w-full cursor-pointer appearance-none bg-transparent;
+  }
+  .seek::-webkit-slider-runnable-track {
+    @apply h-1.5 rounded-pill;
+    background: var(--seek-track);
+  }
+  .seek::-webkit-slider-thumb {
+    @apply h-3 w-3 appearance-none rounded-full border-0;
+    margin-top: -3px;
+    background: var(--seek-thumb, var(--solid-text));
+  }
+  .seek::-moz-range-track {
+    @apply h-1.5 rounded-pill;
+    background: var(--seek-track);
+  }
+  .seek::-moz-range-thumb {
+    @apply h-3 w-3 rounded-full border-0;
+    background: var(--seek-thumb, var(--solid-text));
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

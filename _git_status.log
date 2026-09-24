@@ -1,0 +1,8 @@
+﻿git : fatal: not a git repository (or any of the parent directories): .git
+No linha:1 caractere:1
++ git status --porcelain=v1 2>&1 | Out-File -FilePath "_git_status.log" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: not a gi...ectories): .git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
