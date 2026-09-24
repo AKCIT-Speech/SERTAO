@@ -106,13 +106,27 @@ export default function Hero({
           SERTAO
         </h1>
 
-        <p className="mt-4 font-mono text-xs tracking-[0.04em] text-muted sm:text-sm">
-          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">S</em>pontaneous{' '}
-          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">E</em>motion{' '}
-          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">R</em>ecognition{' '}
-          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">T</em>hrough{' '}
-          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">A</em>udi<em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">o</em>
-        </p>
+        <div className="mt-5 flex max-w-3xl flex-wrap items-baseline gap-x-2 gap-y-1 font-mono text-[11px] leading-relaxed text-muted sm:text-xs">
+          <span>
+            <strong className="font-display text-base font-bold leading-none tracking-tight text-paper sm:text-lg">S</strong>pontaneous
+          </span>
+          <span aria-hidden="true" className="text-faint">·</span>
+          <span>
+            <strong className="font-display text-base font-bold leading-none tracking-tight text-paper sm:text-lg">E</strong>motion
+          </span>
+          <span aria-hidden="true" className="text-faint">·</span>
+          <span>
+            <strong className="font-display text-base font-bold leading-none tracking-tight text-paper sm:text-lg">R</strong>ecognition
+          </span>
+          <span aria-hidden="true" className="text-faint">·</span>
+          <span>
+            <strong className="font-display text-base font-bold leading-none tracking-tight text-paper sm:text-lg">T</strong>hrough
+          </span>
+          <span aria-hidden="true" className="text-faint">·</span>
+          <span>
+            <strong className="font-display text-base font-bold leading-none tracking-tight text-paper sm:text-lg">A</strong>udi<strong className="font-display text-base font-bold leading-none tracking-tight text-paper sm:text-lg">o</strong>
+          </span>
+        </div>
 
         <div className="mt-9 grid grid-cols-2 gap-y-5 sm:grid-cols-4">
           <HeroStat

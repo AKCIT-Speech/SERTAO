@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
-import type { Filters } from './types';
+import type { EmotionFilter, Filters } from './types';
 import { EMOTION_ORDER, EMOTIONS } from './lib/emotions';
 import { useSamples } from './hooks/useSamples';
 import { AudioManagerProvider } from './hooks/useAudioManager';
@@ -23,6 +23,13 @@ export default function App() {
   const galleryRef = useRef<HTMLElement | null>(null);
 
   const samples = manifest?.samples ?? [];
+
+  const emotionCounts = useMemo(() => {
+    const counts = { all: samples.length } as Record<EmotionFilter, number>;
+    for (const emotion of EMOTIONS) counts[emotion.label] = 0;
+    for (const sample of samples) counts[sample.label] += 1;
+    return counts;
+  }, [samples]);
 
   const visibleSamples = useMemo(() => {
     const query = filters.query.trim().toLowerCase();
@@ -116,6 +123,7 @@ export default function App() {
               filters={filters}
               onFilterChange={handleFilterChange}
               onReset={resetFilters}
+              emotionCounts={emotionCounts}
             />
           </>
         )}

@@ -1,11 +1,5 @@
-import { Search, X } from 'lucide-react';
-import type {
-  EmotionFilter,
-  Filters,
-  SortKey,
-  SourceFilter,
-  SplitFilter,
-} from '../types';
+import { X } from 'lucide-react';
+import type { EmotionFilter, Filters } from '../types';
 import { EMOTIONS, emotionInk } from '../lib/emotions';
 
 interface FilterBarProps {
@@ -14,30 +8,8 @@ interface FilterBarProps {
   onReset: () => void;
   shownCount: number;
   totalCount: number;
+  emotionCounts: Record<EmotionFilter, number>;
 }
-
-const SOURCE_OPTIONS: { value: SourceFilter; label: string }[] = [
-  { value: 'all', label: 'All sources' },
-  { value: 'SERTAO', label: 'SERTAO' },
-  { value: 'CORAA human-review', label: 'CORAA human-review' },
-];
-
-const SPLIT_OPTIONS: { value: SplitFilter; label: string }[] = [
-  { value: 'all', label: 'All splits' },
-  { value: 'train', label: 'train' },
-  { value: 'valid', label: 'valid' },
-  { value: 'test', label: 'test' },
-];
-
-const SORT_OPTIONS: { value: SortKey; label: string }[] = [
-  { value: 'emotion', label: 'Sort: emotion' },
-  { value: 'duration', label: 'Sort: duration' },
-  { value: 'filename', label: 'Sort: filename' },
-];
-
-const selectClass =
-  'w-full appearance-none rounded-card border border-line bg-ink-900 px-3 py-2 pr-8 font-mono ' +
-  'text-[11px] text-paper transition-colors hover:border-paper/40 focus-visible:ring-2 sm:w-auto';
 
 export default function FilterBar({
   filters,
@@ -45,22 +17,19 @@ export default function FilterBar({
   onReset,
   shownCount,
   totalCount,
+  emotionCounts,
 }: FilterBarProps) {
-  const chips: { value: EmotionFilter; label: string; color?: string }[] = [
+  const chips: { value: EmotionFilter; label: string; color?: string; count?: number }[] = [
     { value: 'all', label: 'All emotions' },
     ...EMOTIONS.map((e) => ({
       value: e.label as EmotionFilter,
       label: e.en,
       color: e.color,
+      count: emotionCounts[e.label],
     })),
   ];
 
-  const isFiltered =
-    filters.emotion !== 'all' ||
-    filters.source !== 'all' ||
-    filters.split !== 'all' ||
-    filters.query.trim() !== '' ||
-    filters.sort !== 'emotion';
+  const isFiltered = filters.emotion !== 'all';
 
   return (
     <div className="sticky top-0 z-40 -mx-5 border-y border-line bg-ink-900/90 px-5 py-3 backdrop-blur sm:-mx-8 sm:px-8">
@@ -114,84 +83,17 @@ export default function FilterBar({
                   />
                 )}
                 {chip.label}
+                {chip.count !== undefined && (
+                  <span className="tabular-nums text-faint">{chip.count}</span>
+                )}
               </button>
             );
           })}
         </div>
 
-        {/* Secondary controls */}
-        <div className="grid gap-2 sm:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,1fr))]">
-          <div className="relative min-w-0">
-            <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-faint"
-              aria-hidden="true"
-            />
-            <label className="sr-only" htmlFor="filename-search">
-              Search by file name
-            </label>
-            <input
-              id="filename-search"
-              type="search"
-              value={filters.query}
-              onChange={(event) => onChange({ query: event.target.value })}
-              placeholder="Search file name…"
-              className="w-full rounded-card border border-line bg-ink-900 py-2 pl-9 pr-3 font-mono text-[11px]
-                text-paper placeholder:text-faint transition-colors hover:border-paper/40 focus-visible:ring-2"
-            />
-          </div>
-
-          <label className="sr-only" htmlFor="source-filter">
-            Filter by source
-          </label>
-          <select
-            id="source-filter"
-            className={selectClass}
-            value={filters.source}
-            onChange={(event) => onChange({ source: event.target.value as SourceFilter })}
-          >
-            {SOURCE_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-
-          <label className="sr-only" htmlFor="split-filter">
-            Filter by split
-          </label>
-          <select
-            id="split-filter"
-            className={selectClass}
-            value={filters.split}
-            onChange={(event) => onChange({ split: event.target.value as SplitFilter })}
-          >
-            {SPLIT_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-
-          <label className="sr-only" htmlFor="sort-order">
-            Sort order
-          </label>
-          <select
-            id="sort-order"
-            className={selectClass}
-            value={filters.sort}
-            onChange={(event) => onChange({ sort: event.target.value as SortKey })}
-          >
-            {SORT_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-
-          <p className="sr-only" aria-live="polite">
-            Showing {shownCount} of {totalCount} samples
-          </p>
-        </div>
+        <p className="sr-only" aria-live="polite">
+          Showing {shownCount} of {totalCount} samples
+        </p>
       </div>
     </div>
   );

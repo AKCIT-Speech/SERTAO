@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { FileQuestion } from 'lucide-react';
-import type { AudioSample, Filters } from '../types';
+import type { AudioSample, EmotionFilter, Filters } from '../types';
 import AudioCard from './AudioCard';
 import FilterBar from './FilterBar';
 
@@ -10,6 +10,7 @@ interface AudioGalleryProps {
   filters: Filters;
   onFilterChange: (next: Partial<Filters>) => void;
   onReset: () => void;
+  emotionCounts: Record<EmotionFilter, number>;
   loading?: boolean;
 }
 
@@ -20,7 +21,7 @@ function SkeletonCard() {
 }
 
 const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGallery(
-  { samples, totalCount, filters, onFilterChange, onReset, loading = false },
+  { samples, totalCount, filters, onFilterChange, onReset, emotionCounts, loading = false },
   ref,
 ) {
   return (
@@ -56,6 +57,7 @@ const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGa
         onReset={onReset}
         shownCount={samples.length}
         totalCount={totalCount}
+        emotionCounts={emotionCounts}
       />
 
       <div className="mt-6">
@@ -76,7 +78,7 @@ const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGa
               No samples match these filters
             </h3>
             <p className="max-w-md text-sm leading-relaxed text-muted">
-              Try clearing the file-name search, or widening the source and split filters.
+              Try selecting All emotions to see the complete sample set again.
             </p>
             <button
               type="button"
