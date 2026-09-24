@@ -1,14 +1,12 @@
 import { forwardRef } from 'react';
 import { FileQuestion } from 'lucide-react';
-import type { AudioSample, EmotionLabel, Filters } from '../types';
-import { emotionMeta } from '../lib/emotions';
+import type { AudioSample, Filters } from '../types';
 import AudioCard from './AudioCard';
 import FilterBar from './FilterBar';
 
 interface AudioGalleryProps {
   samples: AudioSample[];
   totalCount: number;
-  counts: Record<EmotionLabel, number>;
   filters: Filters;
   onFilterChange: (next: Partial<Filters>) => void;
   onReset: () => void;
@@ -22,12 +20,9 @@ function SkeletonCard() {
 }
 
 const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGallery(
-  { samples, totalCount, counts, filters, onFilterChange, onReset, loading = false },
+  { samples, totalCount, filters, onFilterChange, onReset, loading = false },
   ref,
 ) {
-  const active = filters.emotion !== 'all' ? emotionMeta(filters.emotion as EmotionLabel) : null;
-  const title = active ? `Samples: ${active.en} / ${active.pt}` : 'Samples: all emotions';
-
   return (
     <section
       ref={ref}
@@ -35,19 +30,24 @@ const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGa
       aria-labelledby="gallery-title"
       className="mx-auto max-w-6xl scroll-mt-4 px-5 py-10 sm:px-8 sm:py-12"
     >
-      <div className="mb-6 flex flex-col gap-2 border-t border-line pt-5 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-6 flex flex-col gap-4 border-t border-line pt-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="label-mono">SERTÃO / audio samples</p>
+          <p className="label-mono">SERTAO / samples</p>
           <h2
             id="gallery-title"
-            className="mt-2 font-display text-2xl font-semibold tracking-tight text-paper sm:text-3xl"
+            className="mt-1.5 font-display text-2xl font-semibold tracking-tight text-paper sm:text-3xl"
           >
-            {title}
+            Audio samples
           </h2>
         </div>
-        <p className="font-mono text-[10px] uppercase tracking-label text-faint">
-          {samples.length} / {totalCount} samples
-        </p>
+        <div className="flex items-baseline gap-2 sm:text-right">
+          <p className="font-display text-2xl font-semibold leading-none tabular-nums text-paper">
+            {samples.length}
+          </p>
+          <p className="font-mono text-[10px] uppercase tracking-label text-faint">
+            visible / {totalCount} total
+          </p>
+        </div>
       </div>
 
       <FilterBar
@@ -56,7 +56,6 @@ const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGa
         onReset={onReset}
         shownCount={samples.length}
         totalCount={totalCount}
-        counts={counts}
       />
 
       <div className="mt-6">

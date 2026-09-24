@@ -39,6 +39,50 @@ export default function Hero({
 
   return (
     <header className="relative overflow-hidden border-b border-line">
+      <div className="sertao-landscape" aria-hidden="true">
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox="0 0 1200 420"
+          preserveAspectRatio="xMidYMax slice"
+        >
+          <defs>
+            <linearGradient id="sertao-sky" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="var(--sertao-sky-top)" />
+              <stop offset="100%" stopColor="var(--sertao-sky-bottom)" />
+            </linearGradient>
+            <radialGradient id="sertao-sun-glow">
+              <stop offset="0%" stopColor="var(--sertao-sun)" stopOpacity="0.34" />
+              <stop offset="100%" stopColor="var(--sertao-sun)" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          <rect width="1200" height="420" fill="url(#sertao-sky)" opacity="0.55" />
+          <circle cx="944" cy="112" r="118" fill="url(#sertao-sun-glow)" />
+          <circle cx="944" cy="112" r="42" fill="var(--sertao-sun)" opacity="0.82" />
+
+          <path
+            d="M0 332C126 284 219 302 327 326c125 28 221 18 331-7 118-27 219-39 322-16 91 20 145 29 220 11v106H0Z"
+            fill="var(--sertao-dune-back)"
+            opacity="0.62"
+          />
+          <path
+            d="M0 366c122-36 227-15 335 3 119 20 201 8 306-8 146-23 239-5 344 19 88 20 147 18 215-3v43H0Z"
+            fill="var(--sertao-dune-front)"
+            opacity="0.86"
+          />
+
+          <g fill="var(--sertao-cactus)" opacity="0.92">
+            <path transform="matrix(0.35 0 0 0.35 32 249)" d="M138 364v-76c0-7 5-12 12-12s12 5 12 12v28h13v-17c0-7 5-12 12-12s12 5 12 12v29c0 11-9 20-20 20h-17v16Z" />
+            <path transform="matrix(0.35 0 0 0.35 680 249)" d="M1028 367v-94c0-8 6-14 14-14s14 6 14 14v35h17v-22c0-8 6-14 14-14s14 6 14 14v36c0 12-10 22-22 22h-23v23Z" />
+          </g>
+
+          <g fill="var(--sertao-cactus-dark)">
+            <path transform="matrix(0.35 0 0 0.35 204 249)" d="M274 374v-112c0-9 7-16 16-16s16 7 16 16v42h24v-25c0-9 7-16 16-16s16 7 16 16v38c0 15-12 27-27 27h-29v30Z" />
+            <path transform="matrix(0.35 0 0 0.35 524 249)" d="M788 378v-76c0-8 6-14 14-14s14 6 14 14v27h20v-18c0-8 6-14 14-14s14 6 14 14v31c0 12-10 22-22 22h-26v14Z" />
+          </g>
+        </svg>
+      </div>
+
       {/* Single soft wash tinted by the currently focused class — no gradient stacks. */}
       <div
         aria-hidden="true"
@@ -48,9 +92,9 @@ export default function Hero({
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-5 pb-9 pt-7 sm:px-8 sm:pb-12 sm:pt-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-5 pb-9 pt-7 sm:px-8 sm:pb-12 sm:pt-10">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className="font-display text-sm font-semibold tracking-[0.16em] text-paper">SERTÃO</span>
+          <span className="font-display text-sm font-semibold tracking-[0.16em] text-paper">SERTAO</span>
           <span aria-hidden="true" className="hidden h-px w-8 bg-line sm:block" />
           <span className="label-mono">speech emotion / pt-BR</span>
           <span className="ml-auto">
@@ -59,11 +103,15 @@ export default function Hero({
         </div>
 
         <h1 className="mt-14 font-display text-5xl font-bold leading-none tracking-tight text-paper sm:mt-20 sm:text-7xl">
-          SERTÃO
+          SERTAO
         </h1>
 
-        <p className="mt-4 font-mono text-xs uppercase tracking-label text-muted">
-          Brazilian Portuguese / speech emotion dataset
+        <p className="mt-4 font-mono text-xs tracking-[0.04em] text-muted sm:text-sm">
+          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">S</em>pontaneous{' '}
+          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">E</em>motion{' '}
+          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">R</em>ecognition{' '}
+          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">T</em>hrough{' '}
+          <em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">A</em>udi<em className="not-italic font-display text-sm font-bold leading-none text-paper sm:text-base">o</em>
         </p>
 
         <div className="mt-9 grid grid-cols-2 gap-y-5 sm:grid-cols-4">
@@ -78,7 +126,7 @@ export default function Hero({
         </div>
 
         <p className="sr-only" aria-live="polite">
-          {focusedMeta ? `${focusedMeta.en} / ${focusedMeta.pt}` : 'SERTÃO emotion classes'}
+          {focusedMeta ? `${focusedMeta.en} / ${focusedMeta.pt}` : 'SERTAO emotion classes'}
         </p>
       </div>
     </header>

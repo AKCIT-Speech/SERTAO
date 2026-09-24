@@ -7,7 +7,7 @@ export type EmotionLabel =
   | 'sad'
   | 'surprise';
 
-export type SampleSource = 'SERTÃO' | 'CORAA human-review';
+export type SampleSource = 'SERTAO' | 'CORAA human-review';
 
 export type SampleSplit = 'train' | 'valid' | 'test';
 

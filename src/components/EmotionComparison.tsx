@@ -69,7 +69,7 @@ export default function EmotionComparison({ samples }: EmotionComparisonProps) {
       <div className="mx-auto max-w-6xl px-5 py-7 sm:px-8 sm:py-9">
         <div className="flex items-center justify-between">
           <h2 id="compare-title" className="label-mono text-paper">
-            SERTÃO
+            SERTAO
           </h2>
           <button
             type="button"

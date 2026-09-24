@@ -47,7 +47,7 @@ const EMOTIONS = [
   { label: 'surprise', label_pt: 'Surpresa' },
 ];
 
-const SOURCE_SERTAO = 'SERTÃO';
+const SOURCE_SERTAO = 'SERTAO';
 const SOURCE_CORAA = 'CORAA human-review';
 
 /* ------------------------------------------------------------------ helpers */
@@ -216,7 +216,7 @@ function build() {
   const totalDuration = samples.reduce((acc, s) => acc + (s.duration_seconds ?? 0), 0);
 
   const manifest = {
-    dataset: 'SERTÃO Emotion Dataset',
+    dataset: 'SERTAO Emotion Dataset',
     version: '0.1.0-demo',
     generated_at: new Date().toISOString(),
     language: 'Brazilian Portuguese',

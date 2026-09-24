@@ -14,13 +14,11 @@ interface FilterBarProps {
   onReset: () => void;
   shownCount: number;
   totalCount: number;
-  /** Counts per emotion in the curated set, used for the chip badges. */
-  counts: Record<string, number>;
 }
 
 const SOURCE_OPTIONS: { value: SourceFilter; label: string }[] = [
   { value: 'all', label: 'All sources' },
-  { value: 'SERTÃO', label: 'SERTÃO' },
+  { value: 'SERTAO', label: 'SERTAO' },
   { value: 'CORAA human-review', label: 'CORAA human-review' },
 ];
 
@@ -47,14 +45,12 @@ export default function FilterBar({
   onReset,
   shownCount,
   totalCount,
-  counts,
 }: FilterBarProps) {
-  const chips: { value: EmotionFilter; label: string; sub?: string; color?: string }[] = [
+  const chips: { value: EmotionFilter; label: string; color?: string }[] = [
     { value: 'all', label: 'All emotions' },
     ...EMOTIONS.map((e) => ({
       value: e.label as EmotionFilter,
       label: e.en,
-      sub: String(counts[e.label] ?? 0),
       color: e.color,
     })),
   ];
@@ -68,7 +64,23 @@ export default function FilterBar({
 
   return (
     <div className="sticky top-0 z-40 -mx-5 border-y border-line bg-ink-900/90 px-5 py-3 backdrop-blur sm:-mx-8 sm:px-8">
-      <div className="mx-auto max-w-6xl space-y-3">
+      <div className="mx-auto max-w-6xl space-y-4">
+        <div className="flex items-center justify-between border-b border-line pb-3">
+          <p className="label-mono">Filter samples</p>
+          {isFiltered && (
+            <button
+              type="button"
+              onClick={onReset}
+              className="inline-flex items-center gap-1 rounded-card border border-line px-2 py-1.5
+                font-mono text-[10px] uppercase tracking-label text-muted transition-colors
+                hover:border-paper/50 hover:text-paper focus-visible:ring-2"
+            >
+              <X className="h-3 w-3" aria-hidden="true" />
+              Reset
+            </button>
+          )}
+        </div>
+
         {/* Emotion chips */}
         <div
           className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1 no-scrollbar"
@@ -102,15 +114,14 @@ export default function FilterBar({
                   />
                 )}
                 {chip.label}
-                {chip.sub && <span className="tabular-nums text-faint">{chip.sub}</span>}
               </button>
             );
           })}
         </div>
 
         {/* Secondary controls */}
-        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-          <div className="relative min-w-0 flex-1 sm:max-w-xs">
+        <div className="grid gap-2 sm:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,1fr))]">
+          <div className="relative min-w-0">
             <Search
               className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-faint"
               aria-hidden="true"
@@ -177,23 +188,9 @@ export default function FilterBar({
             ))}
           </select>
 
-          <div className="flex items-center gap-3 sm:ml-auto">
-            <p className="font-mono text-[11px] tabular-nums text-muted" aria-live="polite">
-              Showing {shownCount} of {totalCount} samples
-            </p>
-            {isFiltered && (
-              <button
-                type="button"
-                onClick={onReset}
-                className="inline-flex items-center gap-1 rounded-card border border-line px-2 py-1.5
-                  font-mono text-[10px] uppercase tracking-label text-muted transition-colors
-                  hover:border-paper/50 hover:text-paper focus-visible:ring-2"
-              >
-                <X className="h-3 w-3" aria-hidden="true" />
-                Reset
-              </button>
-            )}
-          </div>
+          <p className="sr-only" aria-live="polite">
+            Showing {shownCount} of {totalCount} samples
+          </p>
         </div>
       </div>
     </div>

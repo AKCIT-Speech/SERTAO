@@ -6,7 +6,7 @@ export default function ThemeToggle() {
   const options = [
     { value: 'light' as const, label: 'Light', Icon: Sun },
     { value: 'dark' as const, label: 'Dark', Icon: Moon },
-    { value: 'sertao' as const, label: 'Sertão', Icon: Sprout },
+    { value: 'sertao' as const, label: 'SERTAO', Icon: Sprout },
   ] satisfies Array<{ value: Theme; label: string; Icon: typeof Sun }>;
 
   return (

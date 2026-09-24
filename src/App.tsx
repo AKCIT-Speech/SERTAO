@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
-import type { EmotionLabel, Filters } from './types';
+import type { Filters } from './types';
 import { EMOTION_ORDER, EMOTIONS } from './lib/emotions';
 import { useSamples } from './hooks/useSamples';
 import { AudioManagerProvider } from './hooks/useAudioManager';
@@ -16,14 +16,6 @@ const INITIAL_FILTERS: Filters = {
   sort: 'emotion',
 };
 
-const EMPTY_COUNTS = EMOTION_ORDER.reduce(
-  (acc, label) => {
-    acc[label] = 0;
-    return acc;
-  },
-  {} as Record<EmotionLabel, number>,
-);
-
 export default function App() {
   const { status, manifest, error } = useSamples();
   const [filters, setFilters] = useState<Filters>(INITIAL_FILTERS);
@@ -31,15 +23,6 @@ export default function App() {
   const galleryRef = useRef<HTMLElement | null>(null);
 
   const samples = manifest?.samples ?? [];
-
-  /** Curated counts per class, derived from samples.json — never hardcoded. */
-  const counts = useMemo(() => {
-    const next = { ...EMPTY_COUNTS };
-    for (const sample of samples) {
-      if (sample.label in next) next[sample.label] += 1;
-    }
-    return next;
-  }, [samples]);
 
   const visibleSamples = useMemo(() => {
     const query = filters.query.trim().toLowerCase();
@@ -130,7 +113,6 @@ export default function App() {
               ref={galleryRef}
               samples={visibleSamples}
               totalCount={samples.length}
-              counts={counts}
               filters={filters}
               onFilterChange={handleFilterChange}
               onReset={resetFilters}

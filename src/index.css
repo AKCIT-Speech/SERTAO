@@ -113,6 +113,13 @@
     --grid-line: rgba(96, 72, 45, 0.075);
     --page-wash: rgba(199, 163, 93, 0.24);
     --selection-bg: rgba(196, 93, 59, 0.22);
+    --sertao-sky-top: #f7dca5;
+    --sertao-sky-bottom: #efe4cd;
+    --sertao-sun: #e4a23d;
+    --sertao-dune-back: #d5af78;
+    --sertao-dune-front: #b9804c;
+    --sertao-cactus: #4d704a;
+    --sertao-cactus-dark: #35563b;
 
     --e-angry: #c45d3b;
     --e-angry-ink: #963f27;
@@ -172,6 +179,16 @@
 }
 
 @layer components {
+  .sertao-landscape {
+    @apply pointer-events-none absolute inset-0 overflow-hidden;
+    opacity: 0;
+    transition: opacity 500ms ease;
+  }
+
+  .theme-sertao .sertao-landscape {
+    opacity: 0.3;
+  }
+
   .label-mono {
     @apply font-mono text-[10px] uppercase tracking-label text-muted;
   }
