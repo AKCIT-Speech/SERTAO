@@ -72,13 +72,9 @@ export default function EmotionComparison({ samples, language }: EmotionComparis
       <div className="mx-auto max-w-6xl px-5 py-9 sm:px-8 sm:py-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="label-mono">{t.comparisonKicker}</p>
-            <h2 id="compare-title" className="mt-2 font-display text-2xl font-semibold tracking-tight text-paper sm:text-3xl">
+            <h2 id="compare-title" className="font-display text-2xl font-semibold tracking-tight text-paper sm:text-3xl">
               {t.comparisonTitle}
             </h2>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-              {t.comparisonDescription}
-            </p>
           </div>
           <button
             type="button"
