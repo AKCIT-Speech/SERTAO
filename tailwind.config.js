@@ -18,6 +18,9 @@ const withAlpha = (variable) => `rgb(var(${variable}) / <alpha-value>)`;
 
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
+  // Theme selectors are switched dynamically at runtime, so keep their
+  // variable blocks in the production stylesheet.
+  safelist: ['theme-light', 'theme-dark', 'theme-sertao'],
   theme: {
     extend: {
       colors: {
@@ -52,7 +55,7 @@ export default {
       },
       borderRadius: {
         // Deliberately tight radii: archival instrument panels, not SaaS cards.
-        card: '3px',
+        card: '6px',
         pill: '2px',
       },
       keyframes: {

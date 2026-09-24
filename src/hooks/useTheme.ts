@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'sertao';
 
 export const THEME_STORAGE_KEY = 'sertao-theme';
 
@@ -9,7 +9,7 @@ function readStoredTheme(): Theme {
   if (typeof window === 'undefined') return 'light';
   try {
     const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark') return stored;
+    if (stored === 'light' || stored === 'dark' || stored === 'sertao') return stored;
   } catch {
     // Private mode or blocked storage: fall through to the default.
   }
@@ -18,9 +18,10 @@ function readStoredTheme(): Theme {
 
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
-  root.classList.toggle('theme-dark', theme === 'dark');
-  root.classList.toggle('theme-light', theme === 'light');
-  root.style.colorScheme = theme;
+  for (const name of ['light', 'dark', 'sertao'] as const) {
+    root.classList.toggle(`theme-${name}`, theme === name);
+  }
+  root.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
 }
 
 export function useTheme() {
@@ -36,7 +37,10 @@ export function useTheme() {
   }, [theme]);
 
   const toggle = useCallback(
-    () => setTheme((current) => (current === 'light' ? 'dark' : 'light')),
+    () =>
+      setTheme((current) =>
+        current === 'light' ? 'dark' : current === 'dark' ? 'sertao' : 'light',
+      ),
     [],
   );
 

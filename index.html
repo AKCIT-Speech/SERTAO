@@ -23,12 +23,12 @@
         var theme = 'light';
         try {
           var stored = window.localStorage.getItem('sertao-theme');
-          if (stored === 'light' || stored === 'dark') theme = stored;
+          if (stored === 'light' || stored === 'dark' || stored === 'sertao') theme = stored;
         } catch (error) {
           /* storage unavailable: keep the default */
         }
         document.documentElement.classList.add('theme-' + theme);
-        document.documentElement.style.colorScheme = theme;
+        document.documentElement.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
       })();
     </script>
   </head>

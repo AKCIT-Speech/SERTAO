@@ -4,7 +4,6 @@ import type { AudioSample, EmotionLabel, Filters } from '../types';
 import { emotionMeta } from '../lib/emotions';
 import AudioCard from './AudioCard';
 import FilterBar from './FilterBar';
-import SectionHeader from './SectionHeader';
 
 interface AudioGalleryProps {
   samples: AudioSample[];
@@ -34,15 +33,22 @@ const AudioGallery = forwardRef<HTMLElement, AudioGalleryProps>(function AudioGa
       ref={ref}
       id="gallery"
       aria-labelledby="gallery-title"
-      className="mx-auto max-w-6xl scroll-mt-4 px-5 py-14 sm:px-8"
+      className="mx-auto max-w-6xl scroll-mt-4 px-5 py-10 sm:px-8 sm:py-12"
     >
-      <SectionHeader
-        id="gallery-title"
-        index="04"
-        kicker="Audio sample gallery"
-        title={title}
-        description="Each card exposes its file name, source, split, duration and language. Playback is on demand — nothing is fetched until you press play, and only one sample plays at a time."
-      />
+      <div className="mb-6 flex flex-col gap-2 border-t border-line pt-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="label-mono">SERTÃO / audio samples</p>
+          <h2
+            id="gallery-title"
+            className="mt-2 font-display text-2xl font-semibold tracking-tight text-paper sm:text-3xl"
+          >
+            {title}
+          </h2>
+        </div>
+        <p className="font-mono text-[10px] uppercase tracking-label text-faint">
+          {samples.length} / {totalCount} samples
+        </p>
+      </div>
 
       <FilterBar
         filters={filters}

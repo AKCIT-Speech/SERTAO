@@ -1,18 +1,11 @@
-import { useState } from 'react';
-import { ArrowDown, Boxes } from 'lucide-react';
 import type { EmotionLabel } from '../types';
 import { EMOTIONS, FULL_DATASET_TOTAL, emotionInk, emotionMeta } from '../lib/emotions';
 import { formatInteger } from '../lib/format';
-import EmotionSignalRail from './EmotionSignalRail';
 import ThemeToggle from './ThemeToggle';
 
 interface HeroProps {
   curatedTotal: number;
-  counts: Record<EmotionLabel, number>;
   selected: EmotionLabel | 'all';
-  onSelectEmotion: (label: EmotionLabel) => void;
-  onExplore: () => void;
-  onViewOverview: () => void;
 }
 
 function HeroStat({
@@ -39,14 +32,9 @@ function HeroStat({
 
 export default function Hero({
   curatedTotal,
-  counts,
   selected,
-  onSelectEmotion,
-  onExplore,
-  onViewOverview,
 }: HeroProps) {
-  const [hovered, setHovered] = useState<EmotionLabel | null>(null);
-  const focusedEmotion = hovered ?? (selected !== 'all' ? selected : null);
+  const focusedEmotion = selected !== 'all' ? selected : null;
   const focusedMeta = focusedEmotion ? emotionMeta(focusedEmotion) : null;
 
   return (
@@ -60,72 +48,38 @@ export default function Hero({
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-14">
+      <div className="relative mx-auto max-w-6xl px-5 pb-9 pt-7 sm:px-8 sm:pb-12 sm:pt-10">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className="label-mono">Speech emotion recognition</span>
+          <span className="font-display text-sm font-semibold tracking-[0.16em] text-paper">SERTÃO</span>
           <span aria-hidden="true" className="hidden h-px w-8 bg-line sm:block" />
-          <span className="label-mono">Brazilian Portuguese</span>
-          <span aria-hidden="true" className="hidden h-px w-8 bg-line sm:block" />
-          <span className="label-mono">Interactive research demo</span>
+          <span className="label-mono">speech emotion / pt-BR</span>
           <span className="ml-auto">
             <ThemeToggle />
           </span>
         </div>
 
-        <h1 className="mt-6 max-w-4xl font-display text-4xl font-bold leading-[1.05] tracking-tight text-paper sm:text-6xl">
-          SERTÃO Emotion Dataset
+        <h1 className="mt-14 font-display text-5xl font-bold leading-none tracking-tight text-paper sm:mt-20 sm:text-7xl">
+          SERTÃO
         </h1>
 
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-          Interactive audio samples of Brazilian Portuguese speech across seven emotion classes.
+        <p className="mt-4 font-mono text-xs uppercase tracking-label text-muted">
+          Brazilian Portuguese / speech emotion dataset
         </p>
 
-        <div className="mt-9 grid grid-cols-2 gap-y-6 sm:grid-cols-4">
+        <div className="mt-9 grid grid-cols-2 gap-y-5 sm:grid-cols-4">
           <HeroStat
             value={String(EMOTIONS.length)}
-            label="emotions"
+            label="classes"
             accent={focusedEmotion ? emotionInk(focusedEmotion) : undefined}
           />
-          <HeroStat value={formatInteger(FULL_DATASET_TOTAL)} label="total samples" />
-          <HeroStat value={formatInteger(curatedTotal)} label="curated examples" />
-          <HeroStat value="pt-BR" label="Brazilian Portuguese" />
+          <HeroStat value={formatInteger(FULL_DATASET_TOTAL)} label="full corpus" />
+          <HeroStat value={formatInteger(curatedTotal)} label="audio samples" />
+          <HeroStat value="pt-BR" label="language" />
         </div>
 
-        <div className="mt-9 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={onExplore}
-            className="inline-flex items-center gap-2 rounded-card bg-paper px-5 py-3 font-display text-sm
-              font-semibold text-ink-900 transition-opacity hover:opacity-90 focus-visible:ring-2"
-          >
-            Explore audio samples
-            <ArrowDown className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            onClick={onViewOverview}
-            className="inline-flex items-center gap-2 rounded-card border border-line bg-transparent px-5 py-3
-              font-display text-sm font-medium text-paper transition-colors hover:border-paper/60
-              focus-visible:ring-2"
-          >
-            <Boxes className="h-4 w-4" aria-hidden="true" />
-            View dataset overview
-          </button>
-        </div>
-
-        <div className="mt-12">
-          <EmotionSignalRail
-            counts={counts}
-            selected={selected}
-            onSelect={onSelectEmotion}
-            onHover={setHovered}
-          />
-          <p className="mt-3 font-mono text-[11px] leading-relaxed text-muted" aria-live="polite">
-            {focusedMeta
-              ? `${focusedMeta.en} / ${focusedMeta.pt} — ${focusedMeta.note}`
-              : 'Hover or activate a segment to inspect a class; activating filters the sample gallery.'}
-          </p>
-        </div>
+        <p className="sr-only" aria-live="polite">
+          {focusedMeta ? `${focusedMeta.en} / ${focusedMeta.pt}` : 'SERTÃO emotion classes'}
+        </p>
       </div>
     </header>
   );

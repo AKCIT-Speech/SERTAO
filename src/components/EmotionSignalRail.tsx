@@ -42,8 +42,8 @@ export default function EmotionSignalRail({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-baseline justify-between">
-        <p className="label-mono">Emotion signal rail</p>
-        <p className="label-mono">7 segments · click to filter</p>
+        <p className="label-mono">Emotion</p>
+        <p className="label-mono">{EMOTIONS.length} classes</p>
       </div>
 
       <div
@@ -66,7 +66,7 @@ export default function EmotionSignalRail({
               onFocus={() => setHover(emotion.label)}
               onBlur={() => setHover(null)}
               aria-pressed={isSelected}
-              aria-label={`${emotion.en} / ${emotion.pt} — ${counts[emotion.label] ?? 0} curated samples`}
+              aria-label={`${emotion.en} / ${emotion.pt} — ${counts[emotion.label] ?? 0} samples`}
               className="group relative flex flex-col items-stretch gap-2 rounded-[2px] px-1 pb-2 pt-2.5
                 text-left transition-[background-color,opacity] duration-200 focus-visible:ring-2
                 sm:px-2 sm:pb-2.5"

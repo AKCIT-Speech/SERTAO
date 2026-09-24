@@ -179,7 +179,7 @@ export default function FilterBar({
 
           <div className="flex items-center gap-3 sm:ml-auto">
             <p className="font-mono text-[11px] tabular-nums text-muted" aria-live="polite">
-              Showing {shownCount} of {totalCount} curated samples
+              Showing {shownCount} of {totalCount} samples
             </p>
             {isFiltered && (
               <button

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /**
- * Two themes, one set of utility classes. Channel variables (--c-*) feed
+ * Three themes, one set of utility classes. Channel variables (--c-*) feed
  * Tailwind's colour tokens; the matching --solid variables exist for inline
  * styles that need a plain colour string.
  *
@@ -14,10 +14,10 @@
   .theme-light {
     color-scheme: light;
 
-    --c-ink-950: 234 230 217; /* #EAE6D9 recessed trays, progress tracks */
-    --c-ink-900: 247 245 238; /* #F7F5EE page background */
-    --c-ink-800: 255 255 255; /* #FFFFFF raised cards */
-    --c-ink-700: 225 220 204; /* #E1DCCC */
+    --c-ink-950: 231 227 216; /* #E7E3D8 recessed trays, progress tracks */
+    --c-ink-900: 244 242 235; /* #F4F2EB page background */
+    --c-ink-800: 250 249 245; /* #FAF9F5 raised cards */
+    --c-ink-700: 224 219 208; /* #E0DBD0 */
     --c-paper: 25 31 39; /*     #191F27 primary text */
     --c-muted: 85 96 107; /*    #55606B secondary text */
     --c-faint: 117 112 95; /*   #75705F tertiary text */
@@ -30,7 +30,7 @@
     --solid-track: #e1dccc;
     --solid-ring: #191f27;
 
-    --grid-line: rgba(120, 112, 92, 0.11);
+    --grid-line: rgba(120, 112, 92, 0.045);
     --selection-bg: rgba(25, 31, 39, 0.14);
 
     /* Emotion hues. --e-*-ink is darkened so the hue stays legible as text
@@ -54,10 +54,10 @@
   .theme-dark {
     color-scheme: dark;
 
-    --c-ink-950: 11 15 20; /*    #0B0F14 */
-    --c-ink-900: 16 21 28; /*    #10151C page background */
-    --c-ink-800: 22 29 38; /*    #161D26 raised cards */
-    --c-ink-700: 28 36 47; /*    #1C242F */
+    --c-ink-950: 10 14 17; /*    #0A0E11 */
+    --c-ink-900: 18 23 27; /*    #12171B page background */
+    --c-ink-800: 25 32 37; /*    #192025 raised cards */
+    --c-ink-700: 31 40 46; /*    #1F282E */
     --c-paper: 244 241 232; /*   #F4F1E8 primary text */
     --c-muted: 169 178 188; /*   #A9B2BC secondary text */
     --c-faint: 91 102 115; /*    #5B6673 tertiary text */
@@ -70,7 +70,7 @@
     --solid-track: #34404c;
     --solid-ring: #f4f1e8;
 
-    --grid-line: rgba(52, 64, 76, 0.16);
+    --grid-line: rgba(52, 64, 76, 0.08);
     --selection-bg: rgba(244, 241, 232, 0.2);
 
     /* On a dark surface the brand hues already carry enough contrast. */
@@ -90,6 +90,46 @@
     --e-surprise-ink: #2fae9b;
   }
 
+  .theme-sertao {
+    color-scheme: light;
+
+    /* Sand, fired clay, mandacaru green and a low blue horizon. */
+    --c-ink-950: 215 193 157; /* #D7C19D dry clay, recessed trays */
+    --c-ink-900: 239 228 205; /* #EFE4CD dry sand page background */
+    --c-ink-800: 250 242 225; /* #FAF2E1 sunlit raised cards */
+    --c-ink-700: 226 209 177; /* #E2D1B1 pressed sand */
+    --c-paper: 45 36 29; /*     #2D241D umber text */
+    --c-muted: 100 83 63; /*    #64533F dry leather text */
+    --c-faint: 132 112 85; /*   #847055 faded earth */
+    --c-line: 202 177 137; /*   #CAB189 clay borders */
+
+    --solid-text: #2d241d;
+    --solid-muted: #64533f;
+    --solid-faint: #847055;
+    --solid-line: #cab189;
+    --solid-track: #dec8a0;
+    --solid-ring: #2d241d;
+
+    --grid-line: rgba(96, 72, 45, 0.075);
+    --page-wash: rgba(199, 163, 93, 0.24);
+    --selection-bg: rgba(196, 93, 59, 0.22);
+
+    --e-angry: #c45d3b;
+    --e-angry-ink: #963f27;
+    --e-disgust: #68784f;
+    --e-disgust-ink: #4e6040;
+    --e-fear: #7c6bb2;
+    --e-fear-ink: #62518f;
+    --e-happy: #d89b37;
+    --e-happy-ink: #93630f;
+    --e-neutral: #849b9a;
+    --e-neutral-ink: #506c6a;
+    --e-sad: #507d91;
+    --e-sad-ink: #3d6070;
+    --e-surprise: #497b57;
+    --e-surprise-ink: #376241;
+  }
+
   html {
     scroll-behavior: smooth;
     /* Keeps anchored sections clear of the sticky filter bar. */
@@ -100,9 +140,10 @@
     @apply bg-ink-900 text-paper font-sans antialiased;
     /* Faint grid, like plotting paper in a lab notebook. */
     background-image:
+      radial-gradient(900px 420px at 88% -5%, var(--page-wash, transparent), transparent 68%),
       linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size: 72px 72px;
+    background-size: 120px 120px;
     background-attachment: fixed;
   }
 

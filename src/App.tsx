@@ -4,11 +4,7 @@ import type { EmotionLabel, Filters } from './types';
 import { EMOTION_ORDER, EMOTIONS } from './lib/emotions';
 import { useSamples } from './hooks/useSamples';
 import { AudioManagerProvider } from './hooks/useAudioManager';
-import { useReducedMotion } from './hooks/useReducedMotion';
 import Hero from './components/Hero';
-import DatasetOverview from './components/DatasetOverview';
-import EmotionDistribution from './components/EmotionDistribution';
-import EmotionAtlas from './components/EmotionAtlas';
 import AudioGallery from './components/AudioGallery';
 import EmotionComparison from './components/EmotionComparison';
 
@@ -31,10 +27,8 @@ const EMPTY_COUNTS = EMOTION_ORDER.reduce(
 export default function App() {
   const { status, manifest, error } = useSamples();
   const [filters, setFilters] = useState<Filters>(INITIAL_FILTERS);
-  const reducedMotion = useReducedMotion();
 
   const galleryRef = useRef<HTMLElement | null>(null);
-  const overviewRef = useRef<HTMLElement | null>(null);
 
   const samples = manifest?.samples ?? [];
 
@@ -78,32 +72,9 @@ export default function App() {
     return sorted;
   }, [filters, samples]);
 
-  const scrollTo = useCallback(
-    (node: HTMLElement | null) => {
-      node?.scrollIntoView({
-        behavior: reducedMotion ? 'auto' : 'smooth',
-        block: 'start',
-      });
-    },
-    [reducedMotion],
-  );
-
   const handleFilterChange = useCallback((next: Partial<Filters>) => {
     setFilters((current) => ({ ...current, ...next }));
   }, []);
-
-  /** Shared by the rail, the atlas and the distribution chart. */
-  const selectEmotion = useCallback(
-    (label: EmotionLabel) => {
-      setFilters((current) => ({
-        ...current,
-        // Clicking the active class again clears the filter.
-        emotion: current.emotion === label ? 'all' : label,
-      }));
-      window.requestAnimationFrame(() => scrollTo(galleryRef.current));
-    },
-    [scrollTo],
-  );
 
   const resetFilters = useCallback(() => setFilters(INITIAL_FILTERS), []);
 
@@ -135,11 +106,7 @@ export default function App() {
 
       <Hero
         curatedTotal={manifest?.curated_total ?? 0}
-        counts={counts}
         selected={filters.emotion}
-        onSelectEmotion={selectEmotion}
-        onExplore={() => scrollTo(galleryRef.current)}
-        onViewOverview={() => scrollTo(overviewRef.current)}
       />
 
       <main>
@@ -158,9 +125,7 @@ export default function App() {
           </div>
         ) : (
           <>
-            <DatasetOverview ref={overviewRef} manifest={manifest} />
-            <EmotionDistribution onSelectEmotion={selectEmotion} />
-            <EmotionAtlas selected={filters.emotion} onSelectEmotion={selectEmotion} />
+            <EmotionComparison samples={samples} />
             <AudioGallery
               ref={galleryRef}
               samples={visibleSamples}
@@ -170,7 +135,6 @@ export default function App() {
               onFilterChange={handleFilterChange}
               onReset={resetFilters}
             />
-            <EmotionComparison samples={samples} />
           </>
         )}
       </main>

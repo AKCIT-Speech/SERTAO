@@ -39,7 +39,17 @@ export default function AudioCard({ sample, index }: AudioCardProps) {
         <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
           {formatDuration(sample.duration_seconds)}
         </span>
+        <span className="inline-flex max-w-[12rem] items-center truncate rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
+          {sample.source}
+        </span>
+        <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
+          {sample.split}
+        </span>
       </div>
+
+      <p className="truncate pl-2 font-mono text-[10px] text-faint" title={sample.filename}>
+        {sample.filename}
+      </p>
 
       <div className="pl-2">
         <AudioPlayer
