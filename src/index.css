@@ -14,24 +14,23 @@
   .theme-light {
     color-scheme: light;
 
-    --c-ink-950: 231 227 216; /* #E7E3D8 recessed trays, progress tracks */
-    --c-ink-900: 244 242 235; /* #F4F2EB page background */
-    --c-ink-800: 250 249 245; /* #FAF9F5 raised cards */
-    --c-ink-700: 224 219 208; /* #E0DBD0 */
-    --c-paper: 25 31 39; /*     #191F27 primary text */
-    --c-muted: 85 96 107; /*    #55606B secondary text */
-    --c-faint: 117 112 95; /*   #75705F tertiary text */
-    --c-line: 213 207 192; /*   #D5CFC0 borders */
+    --c-ink-950: 223 230 230;
+    --c-ink-900: 245 247 247;
+    --c-ink-800: 255 255 255;
+    --c-ink-700: 225 231 232;
+    --c-paper: 29 46 54;
+    --c-muted: 76 94 102;
+    --c-faint: 103 120 126;
+    --c-line: 203 215 218;
 
-    --solid-text: #191f27;
-    --solid-muted: #55606b;
-    --solid-faint: #75705f;
-    --solid-line: #d5cfc0;
-    --solid-track: #e1dccc;
-    --solid-ring: #191f27;
+    --solid-text: #1d2e36;
+    --solid-muted: #4c5e66;
+    --solid-faint: #67787e;
+    --solid-line: #cbd7da;
+    --solid-track: #dfe6e6;
+    --solid-ring: #1d2e36;
 
-    --grid-line: rgba(120, 112, 92, 0.045);
-    --selection-bg: rgba(25, 31, 39, 0.14);
+    --selection-bg: rgba(33, 88, 99, 0.16);
 
     /* Emotion hues. --e-*-ink is darkened so the hue stays legible as text
        on a light surface; --e-* keeps the brand value for fills. */
@@ -54,24 +53,23 @@
   .theme-dark {
     color-scheme: dark;
 
-    --c-ink-950: 10 14 17; /*    #0A0E11 */
-    --c-ink-900: 18 23 27; /*    #12171B page background */
-    --c-ink-800: 25 32 37; /*    #192025 raised cards */
-    --c-ink-700: 31 40 46; /*    #1F282E */
-    --c-paper: 244 241 232; /*   #F4F1E8 primary text */
-    --c-muted: 169 178 188; /*   #A9B2BC secondary text */
-    --c-faint: 91 102 115; /*    #5B6673 tertiary text */
-    --c-line: 52 64 76; /*       #34404C borders */
+    --c-ink-950: 15 26 32;
+    --c-ink-900: 21 34 40;
+    --c-ink-800: 30 45 52;
+    --c-ink-700: 43 60 67;
+    --c-paper: 235 241 240;
+    --c-muted: 173 190 191;
+    --c-faint: 131 151 155;
+    --c-line: 66 84 90;
 
-    --solid-text: #f4f1e8;
-    --solid-muted: #a9b2bc;
-    --solid-faint: #5b6673;
-    --solid-line: #34404c;
-    --solid-track: #34404c;
-    --solid-ring: #f4f1e8;
+    --solid-text: #ebf1f0;
+    --solid-muted: #adbeBF;
+    --solid-faint: #83979b;
+    --solid-line: #42545a;
+    --solid-track: #42545a;
+    --solid-ring: #ebf1f0;
 
-    --grid-line: rgba(52, 64, 76, 0.08);
-    --selection-bg: rgba(244, 241, 232, 0.2);
+    --selection-bg: rgba(235, 241, 240, 0.2);
 
     /* On a dark surface the brand hues already carry enough contrast. */
     --e-angry: #e45756;
@@ -110,7 +108,6 @@
     --solid-track: #dec8a0;
     --solid-ring: #2d241d;
 
-    --grid-line: rgba(96, 72, 45, 0.075);
     --page-wash: rgba(199, 163, 93, 0.24);
     --selection-bg: rgba(196, 93, 59, 0.22);
     --sertao-sky-top: #f7dca5;
@@ -145,13 +142,10 @@
 
   body {
     @apply bg-ink-900 text-paper font-sans antialiased;
-    /* Faint grid, like plotting paper in a lab notebook. */
-    background-image:
-      radial-gradient(900px 420px at 88% -5%, var(--page-wash, transparent), transparent 68%),
-      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size: 120px 120px;
-    background-attachment: fixed;
+  }
+
+  .theme-sertao body {
+    background-image: radial-gradient(900px 420px at 88% -5%, var(--page-wash), transparent 68%);
   }
 
   /* Visible keyboard focus everywhere, never removed. */
@@ -186,7 +180,7 @@
   }
 
   .theme-sertao .sertao-landscape {
-    opacity: 0.3;
+    opacity: 0.1;
   }
 
   .label-mono {

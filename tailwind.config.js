@@ -46,8 +46,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        sans: ['Inter', '"IBM Plex Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['"Source Serif 4"', 'Georgia', 'ui-serif', 'serif'],
+        sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       letterSpacing: {

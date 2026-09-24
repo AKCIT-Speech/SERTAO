@@ -1,19 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="SERTAO Emotion Dataset - interactive audio samples of Brazilian Portuguese speech across seven emotion classes."
+      content="SERTAO: acervo de amostras de fala emocional em português brasileiro, organizado em sete classes para escuta e inspeção qualitativa."
     />
     <meta name="color-scheme" content="light dark" />
-    <title>SERTAO Emotion Dataset — Interactive audio samples</title>
+    <title>SERTAO — Corpus de fala emocional</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
@@ -29,6 +29,14 @@
         }
         document.documentElement.classList.add('theme-' + theme);
         document.documentElement.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+        var language = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+        try {
+          var savedLanguage = window.localStorage.getItem('sertao-language');
+          if (savedLanguage === 'pt' || savedLanguage === 'en') language = savedLanguage;
+        } catch (error) {
+          /* storage unavailable: use browser language */
+        }
+        document.documentElement.lang = language.toLowerCase().startsWith('pt') ? 'pt-BR' : 'en';
       })();
     </script>
   </head>

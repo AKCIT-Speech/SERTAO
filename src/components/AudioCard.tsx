@@ -1,65 +1,36 @@
 import type { AudioSample } from '../types';
 import { emotionMeta } from '../lib/emotions';
 import { formatDuration } from '../lib/format';
+import type { Language } from '../lib/i18n';
 import AudioPlayer from './AudioPlayer';
 
 interface AudioCardProps {
   sample: AudioSample;
-  /** Position within the current result list, shown as a specimen number. */
-  index?: number;
+  language: Language;
 }
 
-export default function AudioCard({ sample, index }: AudioCardProps) {
+export default function AudioCard({ sample, language }: AudioCardProps) {
   const meta = emotionMeta(sample.label);
-  const specimen = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
+  const primary = language === 'pt' ? meta.pt : meta.en;
+  const secondary = language === 'pt' ? meta.en : meta.pt;
 
   return (
-    <article
-      className="group relative flex flex-col gap-3 rounded-card border border-line bg-ink-800/50 p-4
-        transition-colors hover:border-line/80 hover:bg-ink-800/80"
-    >
-      {/* Emotion colour spine */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-y-0 left-0 w-[3px]"
-        style={{ backgroundColor: meta.color }}
+    <article className="grid gap-3 border-b border-line py-5 sm:grid-cols-[12rem_minmax(0,1fr)] sm:items-center sm:gap-6">
+      <div className="flex min-w-0 items-start gap-3">
+        <span className="mt-1 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: meta.color }} aria-hidden="true" />
+        <div className="min-w-0">
+          <p className="font-mono text-xs font-medium uppercase tracking-label text-paper" title={sample.filename}>{sample.id}</p>
+          <p className="mt-1 font-mono text-[11px] text-muted">{formatDuration(sample.duration_seconds, language)}</p>
+        </div>
+      </div>
+      <AudioPlayer
+        id={sample.id}
+        src={sample.audio_url}
+        color={meta.color}
+        title={`${primary} / ${secondary}, ${sample.id}`}
+        metadataDuration={sample.duration_seconds}
+        language={language}
       />
-
-      <header className="flex items-start justify-between gap-3 pl-2">
-        <h3 className="min-w-0 font-display text-sm font-medium leading-tight text-paper">
-          {meta.en}
-          <span className="text-muted"> / {meta.pt}</span>
-        </h3>
-        {specimen && (
-          <p className="shrink-0 font-mono text-[10px] tracking-label text-faint">№{specimen}</p>
-        )}
-      </header>
-
-      <div className="flex flex-wrap items-center gap-1.5 pl-2">
-        <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
-          {formatDuration(sample.duration_seconds)}
-        </span>
-        <span className="inline-flex max-w-[12rem] items-center truncate rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
-          {sample.source}
-        </span>
-        <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
-          {sample.split}
-        </span>
-      </div>
-
-      <p className="truncate pl-2 font-mono text-[10px] text-faint" title={sample.filename}>
-        {sample.filename}
-      </p>
-
-      <div className="pl-2">
-        <AudioPlayer
-          id={sample.id}
-          src={sample.audio_url}
-          color={meta.color}
-          title={`${meta.en} sample${specimen ? ` ${specimen}` : ''}`}
-          metadataDuration={sample.duration_seconds}
-        />
-      </div>
     </article>
   );
 }

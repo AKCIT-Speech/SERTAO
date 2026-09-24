@@ -32,10 +32,10 @@ export default function FilterBar({
   const isFiltered = filters.emotion !== 'all';
 
   return (
-    <div className="sticky top-0 z-40 -mx-5 border-y border-line bg-ink-900/90 px-5 py-3 backdrop-blur sm:-mx-8 sm:px-8">
-      <div className="mx-auto max-w-6xl space-y-4">
-        <div className="flex items-center justify-between border-b border-line pb-3">
-          <p className="label-mono">Filter samples</p>
+    <div className="border-t border-line py-4">
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <p className="label-mono">Classe de emoção</p>
           {isFiltered && (
             <button
               type="button"
@@ -45,7 +45,7 @@ export default function FilterBar({
                 hover:border-paper/50 hover:text-paper focus-visible:ring-2"
             >
               <X className="h-3 w-3" aria-hidden="true" />
-              Reset
+              Limpar
             </button>
           )}
         </div>
@@ -54,7 +54,7 @@ export default function FilterBar({
         <div
           className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1 no-scrollbar"
           role="group"
-          aria-label="Filter by emotion"
+          aria-label="Selecionar classe de emoção"
         >
           {chips.map((chip) => {
             const active = filters.emotion === chip.value;
@@ -92,7 +92,7 @@ export default function FilterBar({
         </div>
 
         <p className="sr-only" aria-live="polite">
-          Showing {shownCount} of {totalCount} samples
+          Exibindo {shownCount} de {totalCount} arquivos de áudio
         </p>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertTriangle, Loader2, Pause, Play, RotateCcw } from 'lucide-react';
 import { useAudioManager } from '../hooks/useAudioManager';
 import { formatTime, resolveAssetUrl } from '../lib/format';
+import { copy, type Language } from '../lib/i18n';
 import Waveform from './Waveform';
 
 interface AudioPlayerProps {
@@ -17,6 +18,7 @@ interface AudioPlayerProps {
   showWaveform?: boolean;
   waveformBars?: number;
   compact?: boolean;
+  language?: Language;
 }
 
 type PlaybackState = 'idle' | 'loading' | 'playing' | 'paused' | 'error';
@@ -27,10 +29,12 @@ export default function AudioPlayer({
   color,
   title,
   metadataDuration,
-  showWaveform = true,
+  showWaveform = false,
   waveformBars = 48,
   compact = false,
+  language = 'en',
 }: AudioPlayerProps) {
+  const t = copy[language];
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { activeId, claim, release } = useAudioManager();
 
@@ -96,12 +100,12 @@ export default function AudioPlayer({
   const percent = Math.round(progress * 100);
 
   const statusLabel = hasError
-    ? 'Audio file unavailable'
+    ? t.fileMissing
     : isBusy
-      ? 'Loading audio'
+      ? t.audioLoading
       : isPlaying
-        ? 'Playing'
-        : 'Paused';
+        ? t.playing
+        : t.paused;
 
   return (
     <div className={compact ? 'space-y-2' : 'space-y-3'}>
@@ -145,7 +149,7 @@ export default function AudioPlayer({
         >
           <AlertTriangle className="mt-[1px] h-3.5 w-3.5 shrink-0 text-emotion-angry" aria-hidden="true" />
           <span>
-            Audio file missing or unreadable.
+            {t.fileMissing}
             <span className="block text-muted">{src}</span>
           </span>
         </p>
@@ -161,7 +165,7 @@ export default function AudioPlayer({
               <button
                 type="button"
                 onClick={toggle}
-                aria-label={`${isPlaying ? 'Pause' : 'Play'} ${title}`}
+                aria-label={`${isPlaying ? t.pause : t.play} ${title}`}
                 aria-pressed={isPlaying}
                 className={`grid shrink-0 place-items-center rounded-card border border-line bg-ink-900
                   text-paper transition-colors hover:border-paper/60 focus-visible:ring-2
@@ -180,7 +184,7 @@ export default function AudioPlayer({
               <button
                 type="button"
                 onClick={restart}
-                aria-label={`Restart ${title}`}
+                aria-label={`${t.restart} ${title}`}
                 className={`grid shrink-0 place-items-center rounded-card border border-line bg-ink-900
                   text-muted transition-colors hover:border-paper/60 hover:text-paper focus-visible:ring-2
                   ${compact ? 'h-8 w-8' : 'h-9 w-9'}`}
@@ -208,8 +212,8 @@ export default function AudioPlayer({
                 value={currentTime}
                 onChange={onSeek}
                 disabled={!effectiveDuration}
-                aria-label={`Seek within ${title}`}
-                aria-valuetext={`${formatTime(currentTime)} of ${formatTime(effectiveDuration)}`}
+                aria-label={`${t.seek} ${title}`}
+                aria-valuetext={`${formatTime(currentTime)} ${t.of} ${formatTime(effectiveDuration)}`}
                 style={{
                   ['--seek-track' as string]: `linear-gradient(to right, ${color} 0%, ${color} ${percent}%, var(--solid-track) ${percent}%, var(--solid-track) 100%)`,
                   ['--seek-thumb' as string]: color,

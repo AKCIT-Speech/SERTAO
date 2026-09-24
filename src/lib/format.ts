@@ -1,3 +1,5 @@
+import type { Language } from './i18n';
+
 /** Formats seconds as m:ss. Returns an em dash when the value is unknown. */
 export function formatTime(seconds: number | null | undefined): string {
   if (seconds == null || !Number.isFinite(seconds) || seconds < 0) return '—';
@@ -8,9 +10,9 @@ export function formatTime(seconds: number | null | undefined): string {
 }
 
 /** Formats a duration for metadata rows, e.g. "2.80 s". */
-export function formatDuration(seconds: number | null | undefined): string {
-  if (seconds == null || !Number.isFinite(seconds)) return 'unknown';
-  return `${seconds.toFixed(2)} s`;
+export function formatDuration(seconds: number | null | undefined, language: Language = 'en'): string {
+  if (seconds == null || !Number.isFinite(seconds)) return '—';
+  return `${seconds.toLocaleString(language === 'pt' ? 'pt-BR' : 'en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} s`;
 }
 
 export function formatInteger(value: number): string {
