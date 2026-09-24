@@ -9,22 +9,6 @@ interface AudioCardProps {
   index?: number;
 }
 
-function SourceTag({ source }: { source: AudioSample['source'] }) {
-  const isCoraa = source === 'CORAA human-review';
-  return (
-    <span
-      className={`inline-flex items-center rounded-pill border px-1.5 py-[2px] font-mono text-[10px]
-        uppercase tracking-label ${
-          isCoraa
-            ? 'border-paper/30 bg-paper/10 text-paper'
-            : 'border-line bg-ink-900 text-muted'
-        }`}
-    >
-      {source}
-    </span>
-  );
-}
-
 export default function AudioCard({ sample, index }: AudioCardProps) {
   const meta = emotionMeta(sample.label);
   const specimen = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
@@ -52,15 +36,8 @@ export default function AudioCard({ sample, index }: AudioCardProps) {
       </header>
 
       <div className="flex flex-wrap items-center gap-1.5 pl-2">
-        <SourceTag source={sample.source} />
-        <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
-          {sample.split}
-        </span>
         <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
           {formatDuration(sample.duration_seconds)}
-        </span>
-        <span className="inline-flex items-center rounded-pill border border-line bg-ink-900 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-label text-muted">
-          {sample.language}
         </span>
       </div>
 

@@ -151,37 +151,54 @@ export default function AudioPlayer({
         </p>
       ) : (
         <>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={toggle}
-              aria-label={`${isPlaying ? 'Pause' : 'Play'} ${title}`}
-              aria-pressed={isPlaying}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-card border border-line bg-ink-900
-                text-paper transition-colors hover:border-paper/60 focus-visible:ring-2"
-              style={{ ['--focus-ring' as string]: color }}
-            >
-              {isBusy ? (
-                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-              ) : isPlaying ? (
-                <Pause className="h-4 w-4" aria-hidden="true" />
-              ) : (
-                <Play className="h-4 w-4" aria-hidden="true" />
+          {/*
+            Two layouts share the same controls. `compact` stacks the seek bar
+            under the buttons so it never gets squeezed inside the narrow
+            columns of the cross-class comparison grid.
+          */}
+          <div className={compact ? 'space-y-2' : 'flex items-center gap-2'}>
+            <div className={compact ? 'flex items-center gap-1.5' : 'contents'}>
+              <button
+                type="button"
+                onClick={toggle}
+                aria-label={`${isPlaying ? 'Pause' : 'Play'} ${title}`}
+                aria-pressed={isPlaying}
+                className={`grid shrink-0 place-items-center rounded-card border border-line bg-ink-900
+                  text-paper transition-colors hover:border-paper/60 focus-visible:ring-2
+                  ${compact ? 'h-8 w-8' : 'h-9 w-9'}`}
+                style={{ ['--focus-ring' as string]: color }}
+              >
+                {isBusy ? (
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                ) : isPlaying ? (
+                  <Pause className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Play className="h-4 w-4" aria-hidden="true" />
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={restart}
+                aria-label={`Restart ${title}`}
+                className={`grid shrink-0 place-items-center rounded-card border border-line bg-ink-900
+                  text-muted transition-colors hover:border-paper/60 hover:text-paper focus-visible:ring-2
+                  ${compact ? 'h-8 w-8' : 'h-9 w-9'}`}
+                style={{ ['--focus-ring' as string]: color }}
+              >
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+
+              {compact && (
+                <p className="ml-auto shrink-0 font-mono text-[10px] tabular-nums text-muted">
+                  {formatTime(currentTime)}
+                  <span className="px-[2px] text-faint">/</span>
+                  {formatTime(effectiveDuration)}
+                </p>
               )}
-            </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={restart}
-              aria-label={`Restart ${title}`}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-card border border-line bg-ink-900
-                text-muted transition-colors hover:border-paper/60 hover:text-paper focus-visible:ring-2"
-              style={{ ['--focus-ring' as string]: color }}
-            >
-              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-            </button>
-
-            <div className="min-w-0 flex-1">
+            <div className={compact ? 'w-full' : 'min-w-0 flex-1'}>
               <input
                 type="range"
                 className="seek focus-visible:ring-2"
@@ -201,11 +218,13 @@ export default function AudioPlayer({
               />
             </div>
 
-            <p className="shrink-0 font-mono text-[11px] tabular-nums text-muted">
-              {formatTime(currentTime)}
-              <span className="px-1 text-faint">/</span>
-              {formatTime(effectiveDuration)}
-            </p>
+            {!compact && (
+              <p className="shrink-0 font-mono text-[11px] tabular-nums text-muted">
+                {formatTime(currentTime)}
+                <span className="px-1 text-faint">/</span>
+                {formatTime(effectiveDuration)}
+              </p>
+            )}
           </div>
 
           {/* Announced to screen readers without cluttering the visual layout. */}
